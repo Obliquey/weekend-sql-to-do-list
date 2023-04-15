@@ -20,7 +20,18 @@ pool.off('error', (error) => {
 });
 
 // GET
+taskRouter.get('/', (req, res) => {
+    console.log('In router GET /tasks');
 
+    let sqlText = `
+        SELECT * FROM "tasks";
+    `;
+    pool.query(sqlText)
+        .then((dbRes) => {
+            let tasks = dbRes.rows;
+            console.log('the tasks', tasks);
+        })
+})
 // POST
 
 // PUT
