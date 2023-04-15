@@ -30,7 +30,10 @@ taskRouter.get('/', (req, res) => {
         .then((dbRes) => {
             let tasks = dbRes.rows;
             console.log('the tasks', tasks);
-        })
+            res.send(tasks);
+        }).catch((dbErr) => {
+            console.log('Failed to connect to tasks db', dbErr);
+        });
 })
 // POST
 
