@@ -63,6 +63,29 @@ taskRouter.post('/', (req, res) => {
 })
 
 // PUT ROUTE
+taskRouter.put('/:id', (req,res) => {
+    let taskToUpdateID = req.params.id;
+    let updateInfo = req.body.isComplete;
+    console.log("Info to update = ", taskToUpdateID, updateInfo)
+
+    let sqlText = `
+        UPDATE "tasks"
+            SET "isComplete" = $1
+            WHERE "id" = $2;
+    `;
+
+    let sqlValues = [updateInfo, taskToUpdateID];
+
+    pool.query(sqlText, sqlValues)
+        .then((dbRes) => {
+            console.log("Successfully Update Task", dbRes);
+            res.sendStatus(200);
+        })
+        .catch((dbErr) => {
+            console.log("Error in PUT req to update task", dbErr);
+            res.sendStatus(500)
+        })
+})
 
 // DELETE ROUTE
 taskRouter.delete('/:id', (req, res) => {

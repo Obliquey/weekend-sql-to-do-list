@@ -10,6 +10,9 @@ function onReady() {
 
     // Function to DELETE task from DOM/DB
     $('#twoLists').on('click', ".deleteButton", deleteTask);
+
+    // Function to update COMPLETE status of task on DB using checkmark button
+    $('#twoLists').on('click', '.completeButton', updateIsComplete);
 };
 
 // Function to retrieve current task info from tasks server and render to DOM
@@ -46,7 +49,7 @@ function renderTasks(array) {
             $('#completedTaskList').append(`
                 <li data-id=${task.id}>
                 ${task.task} || ${task.completeBy} || ${task.notes} 
-                <button class="completedButton">✅</button>
+                <button class="revertButton">Actually This Isn't Done</button>
                 <button class="deleteButton">X</button>
                 </li>
             `);
@@ -101,4 +104,24 @@ function deleteTask() {
     }).catch(function(error) {
         console.log("Can't get out of doing your tasks that easily!! Kidding, there was an error in deleting.")
     })
-}
+}//end deleteTask
+
+
+// Function that listens for checkmark button click, then changes 'this' elements isComplete status by sending PUT req to server with it's ID.
+    // Needs to set isComplete to TRUE using the data section of ajax req
+function updateIsComplete() {
+    let taskToUpdateID = $(this).parent().data('id');
+
+    $.ajax({
+        method: 'PUT',
+        url: `/tasks/${taskToUpdateID}`,
+        data: {
+            isComplete: 'TRUE'
+        }
+    }).then(function(response) {
+        console.log('Update task to COMPLETE');
+        getAndRenderTasks();
+    }).catch(function(error) {
+        console.log("Couldn't update task, error in connecting to database");
+    })
+}//end updateIsComplete
