@@ -44,9 +44,9 @@ function renderTasks(array) {
         }
         else if(task.isComplete === true) {
             $('#completedTaskList').append(`
-                <li data-id="${task.id}>
+                <li data-id=${task.id}>
                 ${task.task} || ${task.completeBy} || ${task.notes} 
-                <button class="completedButton">Completed</button>
+                <button class="completedButton">✅</button>
                 <button class="deleteButton">X</button>
                 </li>
             `);

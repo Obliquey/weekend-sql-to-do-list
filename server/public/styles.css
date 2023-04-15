@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+}
+
+#twoLists {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2%;
+}
+#tasksBox {
+    margin-right: 2%;
+    padding-right: 2%;
+    border: 5px solid black;
+    border-radius: 10px;
+}
+#completedTasksBox {
+    margin-left: 2%;
+    border: 5px solid black;
+    padding-right: 2%;
+    border-radius: 10px;
+}
