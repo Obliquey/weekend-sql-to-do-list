@@ -36,10 +36,13 @@ function getAndRenderTasks() {
 // Function to render tasks to DOM (mainly to keep code clean)
 function renderTasks(array) {
     for (let task of array) {
+        let taskDate = task.completeBy;
+        taskDate = taskDate.slice(0, 9);
+
         if (task.isComplete === false) {
             $('#taskList').append(`
                 <li class="tasks" data-id=${task.id}> 
-                ${task.task} || ${task.completeBy} || ${task.notes} 
+                ${task.task} || ${taskDate} || ${task.notes} 
                 <button class="completeButton">✅</button>
                 <button class="deleteButton">X</button>
                 </li>
@@ -48,7 +51,7 @@ function renderTasks(array) {
         else if(task.isComplete === true) {
             $('#completedTaskList').append(`
                 <li data-id=${task.id}>
-                ${task.task} || ${task.completeBy} || ${task.notes} 
+                ${task.task} || ${taskDate} || ${task.notes} 
                 <button class="revertButton">Actually This Isn't Done</button>
                 <button class="deleteButton">X</button>
                 </li>
