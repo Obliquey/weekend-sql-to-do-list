@@ -10,9 +10,21 @@ body {
     justify-content: space-evenly;
     text-align: center;
     align-content: center;
-    background-size: 100% 100%;
-    background-position: 0px 0px;
-    background-image: linear-gradient(0deg, #F5F5DC 0%, #98D1FAFF 100%);
+    background-size: 10% 5%;
+    background-position: 0px -100px;
+    background-image: conic-gradient(from 310deg at 50% 50%, #93FFD2FF 27%, #FFC079FF 28%);
+}
+header {
+    font-size: 1.3em;
+    font-style: oblique;
+    background-color: #fcfce8;
+    width: 35%;
+    align-self: center;
+    border: 12px solid #93FFD2FF;
+    border-radius: 10px;
+}
+h1 {
+    font-variant: small-caps;
 }
 
 #twoLists {
@@ -23,21 +35,34 @@ body {
 }
 #tasksBox {
     margin-right: 2%;
-    padding-right: 2%;
-    border: 5px solid black;
+    padding: 2%;
+    border: 12px solid #93FFD2FF;
     border-radius: 10px;
     width: 50%;
+    background-color: #fcfce8;
 }
 #completedTasksBox {
     margin-left: 2%;
-    border: 5px solid black;
-    padding-right: 2%;
+    border: 12px solid #93FFD2FF;
+    padding: 2%;
     border-radius: 10px;
     width: 50%;
+    background-color: #fcfce8;
+}
+#completedTaskList {
+    opacity: 0.6;
+    color: green;
 }
 ul {
     list-style-type: circle;
 }
+li {
+    border-bottom: 1px dotted #ccc;
+    border-collapse: collapse;
+    margin: 2%;
+    padding-bottom: 3px;
+}
 h3 {
     border-bottom: 1px solid black;
+    font-style: normal;
 }
