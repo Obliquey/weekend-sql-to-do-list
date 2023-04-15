@@ -1,7 +1,7 @@
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     text-align: center;
     align-content: center;
 }
@@ -23,4 +23,7 @@ body {
     border: 5px solid black;
     padding-right: 2%;
     border-radius: 10px;
+}
+ul {
+    list-style-type: circle;
 }
