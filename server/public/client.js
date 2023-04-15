@@ -42,7 +42,7 @@ function renderTasks(array) {
         if (task.isComplete === false) {
             $('#taskList').append(`
                 <li class="tasks" data-id=${task.id}> 
-                ${task.task} || ${taskDate} || ${task.notes} 
+                ${task.task} --- ${task.notes} --- ${taskDate}  
                 <button class="completeButton">✅</button>
                 <button class="deleteButton">X</button>
                 </li>
@@ -51,7 +51,7 @@ function renderTasks(array) {
         else if(task.isComplete === true) {
             $('#completedTaskList').append(`
                 <li data-id=${task.id}>
-                ${task.task} || ${taskDate} || ${task.notes} 
+                ${task.task} --- ${task.notes} --- ${taskDate} 
                 <button class="revertButton">Actually This Isn't Done</button>
                 <button class="deleteButton">X</button>
                 </li>
