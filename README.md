@@ -13,5 +13,6 @@ Cheesy, yep. Oh well. The User will submit tasks they need to do, and my app wil
 **PROBLEMS ENCOUNTERED AND SOLVED**
 1. Small one, but for some reason my tasks to be completed were appending to the DOM just nicely, while completed tasks (tasks with a 'isComplete' val of TRUE) were not appending correctly. I realized it's because I had a single " within the data-id attr of that list item when I was appending them. Problem fixed by removing quotation.
 2. Another problem, another typo! My completed tasks "completedButtons" were working nicely, while my incomplete tasks "completeButtons" were not. Well, I realized it's because I was had made that typo, with one being named "completedButtons" and the other "completeButtons". Whoops.
+3. Decided to use LI instead of a table for my checklist. So I need to figure out a way to post the tasks to the DOM in a legible way....
 
 Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).

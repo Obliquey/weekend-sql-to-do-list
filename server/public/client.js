@@ -42,18 +42,27 @@ function renderTasks(array) {
         if (task.isComplete === false) {
             $('#taskList').append(`
                 <li class="tasks" data-id=${task.id}> 
-                ${task.task} --- ${task.notes} --- ${taskDate}  
-                <button class="completeButton">✅</button>
-                <button class="deleteButton">X</button>
+                    ${task.task}
+                    <button class="completeButton">✅</button>
+                    <button class="deleteButton">X</button>
+                        <ul>
+                            <li>${task.notes}</li>
+                            <li>Get it done by: ${taskDate}</li>
+                        </ul>
                 </li>
             `)
         }
         else if(task.isComplete === true) {
+            // if a task is completed, append to completed task list. Would like to edit this to have the revert button revert it's completed status, posting it back to to-do list. Also, Have the taskDate mark when it was done, rather than when it was set to BE done.
             $('#completedTaskList').append(`
                 <li data-id=${task.id}>
-                ${task.task} --- ${task.notes} --- ${taskDate} 
-                <button class="revertButton">Actually This Isn't Done</button>
-                <button class="deleteButton">X</button>
+                    ${task.task}
+                    <button class="revertButton">Actually This Isn't Done</button>
+                    <button class="deleteButton">X</button>
+                        <ul>
+                            <li>${task.notes}</li>
+                            <li>${taskDate}</li>
+                        </ul>
                 </li>
             `);
         }
