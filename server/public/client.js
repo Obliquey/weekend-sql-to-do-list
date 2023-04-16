@@ -41,13 +41,13 @@ function renderTasks(array) {
 
         if (task.isComplete === false) {
             $('#taskList').append(`
-                <li class="tasks" data-id=${task.id}> 
-                    ${task.task}
+                <li class="tasks" data-id=${task.id} data-status="FALSE"> 
                     <button class="completeButton">✅</button>
                     <button class="deleteButton">X</button>
+                    ${task.task}
                         <ul>
-                            <li>${task.notes}</li>
-                            <li>Get it done by: ${taskDate}</li>
+                            <li>NOTES: ${task.notes}</li>
+                            <li>DUE: ${taskDate}</li>
                         </ul>
                 </li>
             `)
@@ -55,13 +55,13 @@ function renderTasks(array) {
         else if(task.isComplete === true) {
             // if a task is completed, append to completed task list. Would like to edit this to have the revert button revert it's completed status, posting it back to to-do list. Also, Have the taskDate mark when it was done, rather than when it was set to BE done.
             $('#completedTaskList').append(`
-                <li data-id=${task.id}>
-                    ${task.task}
-                    <button class="revertButton">Actually This Isn't Done</button>
+                <li data-id=${task.id} data-status="TRUE">
+                    <button class="completeButton">⏪</button>
                     <button class="deleteButton">X</button>
+                    ${task.task}
                         <ul>
-                            <li>${task.notes}</li>
-                            <li>${taskDate}</li>
+                            <li>NOTES: ${task.notes}</li>
+                            <li>DUE: ${taskDate}</li>
                         </ul>
                 </li>
             `);
@@ -123,17 +123,35 @@ function deleteTask() {
     // Needs to set isComplete to TRUE using the data section of ajax req
 function updateIsComplete() {
     let taskToUpdateID = $(this).parent().data('id');
+    let statusToUpdate = $(this).parent().data('status');
 
-    $.ajax({
-        method: 'PUT',
-        url: `/tasks/${taskToUpdateID}`,
-        data: {
-            isComplete: 'TRUE'
-        }
-    }).then(function(response) {
-        console.log('Update task to COMPLETE');
-        getAndRenderTasks();
-    }).catch(function(error) {
-        console.log("Couldn't update task, error in connecting to database");
-    })
+    // depending on current isComplete status of task, either update it to TRUE or revert back to FALSE, thus changing it's location on the DOM
+    if (statusToUpdate === 'FALSE') {
+        $.ajax({
+            method: 'PUT',
+            url: `/tasks/${taskToUpdateID}`,
+            data: {
+                isComplete: 'TRUE'
+            }
+        }).then(function(response) {
+            console.log('Update task to COMPLETE');
+            getAndRenderTasks();
+        }).catch(function(error) {
+            console.log("Couldn't update task, error in connecting to database");
+        })
+    }
+    else if (statusToUpdate === 'TRUE') {
+        $.ajax({
+            method: 'PUT',
+            url: `/tasks/${taskToUpdateID}`,
+            data: {
+                isComplete: 'FALSE'
+            }
+        }).then(function(response) {
+            console.log('Update task to TO-DO');
+            getAndRenderTasks();
+        }).catch(function(error) {
+            console.log("Couldn't update task, error in connecting to database");
+        })
+    }
 }//end updateIsComplete
