@@ -15,22 +15,23 @@ function onReady() {
     $('#twoLists').on('click', '.completeButton', updateIsComplete);
 };
 
+function clearTable() {
+    $('#taskList').empty();
+    $('#completedTaskList').empty();
+}
 // Function to retrieve current task info from tasks server and render to DOM
 function getAndRenderTasks() {
     
     $.ajax({
         method: 'GET',
         url: '/tasks'
-    }).then(function (response) {
+    }).then((response) => {
         console.log('In GET /tasks, retrieved tasks', response);
         // clear div fields for re-render
-        $('#taskList').empty();
-        $('#completedTaskList').empty();
+        clearTable();
         // calling renderFunction to keep things cleaner
         renderTasks(response)
-    }).catch(function(error) {
-        console.log('Could not retrieve tasks in GET /tasks', error);
-    });
+    }).catch((error) => console.log(error));
 }//end getAndRenderTasks function
 
 // Function to render tasks to DOM (mainly to keep code clean)
@@ -70,6 +71,7 @@ function renderTasks(array) {
 }//end renderTasks function
 
 
+
 // Function for retrieving new task info, bundling into object, and POSTing to server
 function createNewTask(event) {
     event.preventDefault();
@@ -77,7 +79,7 @@ function createNewTask(event) {
     let newTask = $('#taskInput').val();
     let completeBy = $('#taskCompleteBy').val();
     let taskNotes = $('#taskNotes').val();
-
+// could I replace the retrieval of info and sending the objevt in my POST req with just an arrow function of some sort?
     $.ajax({
         method: 'POST',
         url: '/tasks',
@@ -87,7 +89,7 @@ function createNewTask(event) {
             isComplete: false,
             notes: taskNotes
         }
-    }).then(function(response) {
+    }).then((response) => {
         console.log('Successfully created new task');
         // clear input fields upon success
         $('#taskInput').val('');
@@ -95,63 +97,54 @@ function createNewTask(event) {
         $('#taskNotes').val('');
         // re-render tasks from db
         getAndRenderTasks();
-    }).catch(function(error) {
-        console.log("Encountered error creating new task", error);
-    });
+    }).catch((error) => console.log(error));
 }//end createNewTask function
 
 
 // Function needs to send DELETE SQL query to db, then call getAndRenderTasks to update DOM
 function deleteTask() {
     // get ID of task to delete
-    let taskToDelete = $(this).parent().data('id');
+    // let taskToDelete = $(this).parent().data('id');
 
     // make DELETE req to server for the task with ID of ${taskToDelete}
     $.ajax({
         method: 'DELETE',
-        url: `/tasks/${taskToDelete}`
-    }).then(function(response) {
+        url: `/tasks/${$(this).parent().data('id')}`
+    }).then((response) => {
         console.log("Successfully deleted task! Though I suppose you knew that since it's gone.");
         getAndRenderTasks();
-    }).catch(function(error) {
-        console.log("Can't get out of doing your tasks that easily!! Kidding, there was an error in deleting.")
-    })
+    }).catch((error) => console.log(error))
 }//end deleteTask
 
 
 // Function that listens for checkmark button click, then changes 'this' elements isComplete status by sending PUT req to server with it's ID.
     // Needs to set isComplete to TRUE using the data section of ajax req
 function updateIsComplete() {
-    let taskToUpdateID = $(this).parent().data('id');
-    let statusToUpdate = $(this).parent().data('status');
+    // let statusToUpdate = $(this).parent().data('status');
 
     // depending on current isComplete status of task, either update it to TRUE or revert back to FALSE, thus changing it's location on the DOM
-    if (statusToUpdate === 'FALSE') {
+    if ($(this).parent().data('status') === 'FALSE') {
         $.ajax({
             method: 'PUT',
-            url: `/tasks/${taskToUpdateID}`,
+            url: `/tasks/${$(this).parent().data('id')}`,
             data: {
                 isComplete: 'TRUE'
             }
-        }).then(function(response) {
+        }).then((response) => {
             console.log('Update task to COMPLETE');
             getAndRenderTasks();
-        }).catch(function(error) {
-            console.log("Couldn't update task, error in connecting to database");
-        })
+        }).catch((error) => console.log(error))
     }
-    else if (statusToUpdate === 'TRUE') {
+    else if ($(this).parent().data('status') === 'TRUE') {
         $.ajax({
             method: 'PUT',
             url: `/tasks/${taskToUpdateID}`,
             data: {
                 isComplete: 'FALSE'
             }
-        }).then(function(response) {
+        }).then((response) => {
             console.log('Update task to TO-DO');
             getAndRenderTasks();
-        }).catch(function(error) {
-            console.log("Couldn't update task, error in connecting to database");
-        })
+        }).catch((error) => console.log(error))
     }
 }//end updateIsComplete

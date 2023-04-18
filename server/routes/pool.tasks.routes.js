@@ -29,9 +29,8 @@ taskRouter.get('/', (req, res) => {
     `;
     pool.query(sqlText)
         .then((dbRes) => {
-            let tasks = dbRes.rows;
-            console.log('the tasks', tasks);
-            res.send(tasks);
+            console.log('the tasks', dbRes.rows);
+            res.send(dbRes.rows);
         }).catch((dbErr) => {
             console.log('Failed to connect to tasks db', dbErr);
         });
